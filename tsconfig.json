@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2017",
     "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "types": ["node", "hardhat/types", "hardhat-deploy-ethers/types"]
+    "target": "es2017",
+    "declaration": true,
+    "outDir": "./dist"
   },
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*"
+  ]
 }
