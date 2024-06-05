@@ -1,6 +1,6 @@
 {
   "name": "@atlas-labs-inc/hardhat-atlas-zksync-deploy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tiny extension/fork of `@matterlabs/hardhat-zksync-deploy` to support Atlas.",
   "main": "index.js",
   "directories": {
