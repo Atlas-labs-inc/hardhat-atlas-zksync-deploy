@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AtlaszkSyncDeployer = void 0;
+exports.getDeployer = exports.AtlaszkSyncDeployer = void 0;
+const zk = require("zksync-ethers");
 const deployer_helper_1 = require("./deployer-helper");
 /**
  * An entity capable of deploying contracts to the zkSync network.
@@ -30,3 +31,12 @@ class AtlaszkSyncDeployer {
     }
 }
 exports.AtlaszkSyncDeployer = AtlaszkSyncDeployer;
+const getDeployer = async (hre) => {
+    // @ts-ignore
+    const atlasRpc = hre.config.networks.atlas.url;
+    const zksyncProvider = new zk.Provider(atlasRpc, undefined, { batchMaxCount: 1 });
+    const signer = await zksyncProvider.getSigner();
+    const deployer = new AtlaszkSyncDeployer(hre, zk.Signer.from(signer, Number((await zksyncProvider.getNetwork()).chainId.toString()), zksyncProvider));
+    return { signer, deployer, provider: zksyncProvider };
+};
+exports.getDeployer = getDeployer;

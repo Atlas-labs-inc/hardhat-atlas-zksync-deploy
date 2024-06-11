@@ -18,3 +18,10 @@ export declare class AtlaszkSyncDeployer implements AbstractDeployer {
     loadArtifact(contractNameOrFullyQualifiedName: string): Promise<ZkSyncArtifact>;
     deploy(contractNameOrArtifact: ZkSyncArtifact | string, constructorArguments?: any[], overrides?: ethers.Overrides, additionalFactoryDeps?: ethers.BytesLike[]): Promise<zk.Contract>;
 }
+export declare const getDeployer: (hre: HardhatRuntimeEnvironment) => Promise<{
+    signer: ethers.JsonRpcSigner & {
+        provider: zk.Provider;
+    };
+    deployer: AtlaszkSyncDeployer;
+    provider: zk.Provider;
+}>;
