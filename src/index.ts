@@ -67,3 +67,23 @@ export class AtlaszkSyncDeployer implements AbstractDeployer {
         );
     }
 }
+
+export const getDeployer = async (hre: HardhatRuntimeEnvironment): Promise<{signer: ethers.JsonRpcSigner & {provider: zk.Provider}, deployer: AtlaszkSyncDeployer, provider: zk.Provider}> => {
+	// @ts-ignore
+	const atlasRpc: string = hre.config.networks.atlas.url;
+
+	const zksyncProvider = new zk.Provider(atlasRpc, undefined, {batchMaxCount: 1});
+
+	const signer = await zksyncProvider.getSigner() as ethers.JsonRpcSigner & {provider: zk.Provider};
+
+	const deployer = new AtlaszkSyncDeployer(
+		hre,
+		zk.Signer.from(
+			signer,
+			Number((await zksyncProvider.getNetwork()).chainId.toString()),
+			zksyncProvider
+		)
+	)
+	return {signer, deployer, provider: zksyncProvider};
+};
+
